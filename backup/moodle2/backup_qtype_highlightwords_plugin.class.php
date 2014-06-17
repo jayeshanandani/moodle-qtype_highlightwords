@@ -48,7 +48,7 @@ class backup_qtype_highlightwords_plugin extends backup_qtype_plugin {
 
         // Now create the qtype own structures.
         $highlightwords = new backup_nested_element('highlightwords', array('id'), array(
-            'delimitchars', 'correctfedback', 'correctfeddbackformat', 'partiallycorrectfeedback',
+            'delimitchars', 'correctfeedback', 'correctfeedbackformat', 'partiallycorrectfeedback',
             'partiallycorrectfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat'));
 
