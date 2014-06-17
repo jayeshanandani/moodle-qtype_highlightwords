@@ -17,10 +17,9 @@
 /**
  * The question type class for the highlight words question type.
  *
- * @package    qtype
- * @subpackage highlightwords
- * @copyright  2014 Jayesh Anandani
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   qtype_highlightwords
+ * @copyright 2014 Jayesh Anandani
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

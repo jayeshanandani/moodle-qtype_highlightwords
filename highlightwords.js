@@ -16,10 +16,9 @@
 /**
  * JavaScript code for the gapfill question type.
  *
- * @package    qtype
- * @subpackage gapfill
- * @copyright  2012 Marcus Green
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   qtype_highlightwords
+ * @copyright 2012 Marcus Green
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /* This should be called script.js and go through the Moodle minify process but that seems to break it */
 $(function() {

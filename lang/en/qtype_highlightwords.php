@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The language strings for component 'qtype_highlightwords', language 'en' 
- *    
+ * The language strings for component 'qtype_highlightwords', language 'en'
+ *
+ * @package   qtype_highlightwords
  * @copyright 2014 Jayesh Anandani
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package qtype
- * @subpackage highlightwords
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
 
@@ -28,13 +27,13 @@ $string['delimitchars'] = 'Delimit characters';
 $string['delimitchars_help'] = 'Change the characters that delimit a field from the default [ ], useful for programming language questions';
 $string['duplicatepartialcredit'] = 'Credit is partial because you have duplicate answers';
 $string['highlightwords'] = 'Highlight words.';
-$string['moreoptions'] = 'More Options.';
+$string['moreoptions'] = 'More options.';
 $string['pleaseenterananswer'] = 'Please enter an answer.';
 $string['pluginname'] = 'Higlight words question type';
 $string['pluginname_help'] = 'Place the answers within square brackets e.g. The [cat] sat on the [mat].';
 $string['pluginname_link'] = 'question/type/highlightwords';
-$string['pluginnameadding'] = 'Adding a Highlight words Question.';
-$string['pluginnameediting'] = 'Editing Highlight words Question.';
+$string['pluginnameadding'] = 'Adding a Highlight words question.';
+$string['pluginnameediting'] = 'Editing Highlight words question.';
 $string['pluginnamesummary'] = 'Summary';
 $string['questionsmissing'] = 'You have not included any fields in your question text';
 $string['wronganswers'] = 'Distractors.';

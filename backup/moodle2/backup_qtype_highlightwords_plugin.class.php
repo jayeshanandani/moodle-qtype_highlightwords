@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    highlightwords
+ * @package    qtype_highlightwords
  * @subpackage backup-moodle2
  * @copyright  2014 Jayesh Anandani
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -48,7 +48,7 @@ class backup_qtype_highlightwords_plugin extends backup_qtype_plugin {
 
         // Now create the qtype own structures.
         $highlightwords = new backup_nested_element('highlightwords', array('id'), array(
-            'delimitchars', 'correctfedback', 'correctfeddbackformat', 'partiallycorrectfeedback',
+            'delimitchars', 'correctfeedback', 'correctfeedbackformat', 'partiallycorrectfeedback',
             'partiallycorrectfeedbackformat',
             'incorrectfeedback', 'incorrectfeedbackformat'));
 
