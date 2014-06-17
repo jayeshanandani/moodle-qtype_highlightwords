@@ -15,12 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The language strings for component 'qtype_highlightwords', language 'en' 
- *    
+ * The language strings for component 'qtype_highlightwords', language 'en'
+ *
+ * @package   qtype_highlightwords
  * @copyright 2014 Jayesh Anandani
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package qtype
- * @subpackage highlightwords
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
 

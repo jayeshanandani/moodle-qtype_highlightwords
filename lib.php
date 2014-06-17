@@ -17,10 +17,9 @@
 /**
  * Serve question type files
  *
- * @package    qtype
- * @subpackage highlightwords
- * @copyright  2014 Jayesh Anandani
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   qtype_highlightwords
+ * @copyright 2014 Jayesh Anandani
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 
@@ -29,8 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Checks file access for highlightwords  questions.
- * @package  qtype_highlightwords
- * @category files
+ *
  * @param stdClass $course course object
  * @param stdClass $cm course module object
  * @param stdClass $context context object
