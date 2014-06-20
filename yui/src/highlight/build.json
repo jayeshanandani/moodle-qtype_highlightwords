@@ -1,0 +1,10 @@
+{
+  "name": "moodle-qtype_highlightword-highlight",
+  "builds": {
+    "moodle-qtype_highlightword-highlight": {
+      "jsfiles": [
+        "highlight.js"
+      ]
+    }
+  }
+}

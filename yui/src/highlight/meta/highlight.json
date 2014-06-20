@@ -1,0 +1,9 @@
+{
+  "moodle-qtype_highlightwords-highlight": {
+    "requires": [
+        "base",
+        "node",
+        "text-wordbreak"
+    ]
+  }
+}

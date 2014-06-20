@@ -33,23 +33,13 @@ require_once($CFG->dirroot . '/question/engine/lib.php');
  */
 class qtype_highlightwords extends question_type {
 
-    /*
-     *  Called when previewing a question or when displayed in a quiz
-     */
-
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
     }
 
-    /**
-     * Save the units and the answers associated with this question.
-     * @return boolean to indicate success or failure.
-     * 
-     */
     public function save_question_options($question) {
-        /* Save the extra data to your database tables from the $question object */
 
         /* answerwords are the text within delimeters */
         $answerwords = $this->get_highlightwords($question, $question->delimitchars, $question->questiontext);
@@ -90,9 +80,7 @@ class qtype_highlightwords extends question_type {
         global $DB;
         $oldanswers = $DB->get_records('question_answers', array('question' => $question->id), 'id ASC');
 
-        // Insert all the new answers.
         foreach ($answerfields as $field) {
-            // Save the true answer - update an existing answer if possible.
             if ($answer = array_shift($oldanswers)) {
                 $answer->question = $question->id;
                 $answer->answer = $field['value'];
@@ -100,7 +88,6 @@ class qtype_highlightwords extends question_type {
                 $answer->fraction = $field['fraction'];
                 $DB->update_record('question_answers', $answer);
             } else {
-                // Insert a blank record.
                 $answer = new stdClass();
                 $answer->question = $question->id;
                 $answer->answer = $field['value'];
@@ -112,16 +99,13 @@ class qtype_highlightwords extends question_type {
                 $answer->id = $DB->insert_record('question_answers', $answer);
             }
         }
-        // Delete old answer records.
+
         foreach ($oldanswers as $oa) {
             $DB->delete_records('question_answers', array('id' => $oa->id));
         }
     }
 
     public function get_highlightwords($question, $delimitchars, $questiontext) {
-        /* left for left delimiter right for right delimiter
-         * defaults to []
-         */
         $left = substr($delimitchars, 0, 1);
         $right = substr($delimitchars, 1, 1);
         $fieldregex = '/.*?\\' . $left . '(.*?)\\' . $right . '/';
@@ -141,24 +125,12 @@ class qtype_highlightwords extends question_type {
      */
     public function get_answer_fields(array $answerwords, $question) {
         $answerfields = array();
-        /* this next block runs when importing from xml */
-        if (property_exists($question, 'answer')) {
-            foreach ($question->answer as $key => $value) {
-                if ($question->fraction[$key] == 0) {
-                    $answerfields[$key]['value'] = $question->answer[$key];
-                    $answerfields[$key]['fraction'] = 0;
-                } else {
-                    $answerfields[$key]['value'] = $question->answer[$key];
-                    $answerfields[$key]['fraction'] = 1;
-                }
-            }
-        }
 
-        /* the rest of this function runs when saving from edit form */
         if (!property_exists($question, 'answer')) {
+        	$length = count($answerwords);
             foreach ($answerwords as $key => $value) {
                 $answerfields[$key]['value'] = $value;
-                $answerfields[$key]['fraction'] = 1;
+                $answerfields[$key]['fraction'] = 1 / $length;
             }
         }
         return $answerfields;

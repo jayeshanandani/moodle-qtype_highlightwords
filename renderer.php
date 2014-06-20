@@ -28,12 +28,20 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
 
     public function formulation_and_controls(question_attempt $qa, question_display_options $options) {
         global $PAGE;
-
+        
         $question = $qa->get_question();
         $left = substr($question->delimitchars, 0, 1);
         $right = substr($question->delimitchars, 1, 1);
         $data = str_replace(array($left,$right),"",$qa->get_question()->format_questiontext($qa));
         $output = $data;
+
+        $params = array(
+        	'data' => $data
+        );
+
+        $PAGE->requires->yui_module('moodle-qtype_highlightwords-highlight',
+                'M.qtype_highlightwords.highlight.init', array($params));
+
         return $output;
     }
 

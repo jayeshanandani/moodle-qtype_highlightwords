@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -20,4 +19,21 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+/*YUI.add('moodle-qtype_highlightwords-highlight', function(Y) {
+    var HIGHLIGHTWORDSHIGHLIGHTNAME = 'highlightwords_highlight';
+    var HIGHLIGHTWORDS_HIGHLIGHT = function() {
+        HIGHLIGHTWORDS_HIGHLIGHT.superclass.constructor.apply(this, arguments);
+    };
+
+M.qtype_highlightwords = M.qtype_highlightwords || {};
+    M.qtype_highlightwords.init_question = function(config) {
+        return new  HIGHLIGHTWORDS_HIGHLIGHT(config);
+    };
+}
+});*/
+
+M.qtype_highlightwords = M.qtype_highlightwords || {};
+M.qtype_highlightwords.highlight = {
+  init: function(param) {
+  }
+};

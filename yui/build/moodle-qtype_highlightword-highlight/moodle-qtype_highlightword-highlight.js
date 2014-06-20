@@ -1,4 +1,5 @@
-<?PHP
+YUI.add('moodle-qtype_highlightword-highlight', function (Y, NAME) {
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -20,11 +21,23 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+/*YUI.add('moodle-qtype_highlightwords-highlight', function(Y) {
+    var HIGHLIGHTWORDSHIGHLIGHTNAME = 'highlightwords_highlight';
+    var HIGHLIGHTWORDS_HIGHLIGHT = function() {
+        HIGHLIGHTWORDS_HIGHLIGHT.superclass.constructor.apply(this, arguments);
+    };
 
-$plugin->version   = 2014060400;
-//$plugin->requires  = TODO;
-$plugin->cron      = 0;
-$plugin->component = 'qtype_highlightwords';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = 'TODO';
+M.qtype_highlightwords = M.qtype_highlightwords || {};
+    M.qtype_highlightwords.init_question = function(config) {
+        return new  HIGHLIGHTWORDS_HIGHLIGHT(config);
+    };
+}
+});*/
+
+M.qtype_highlightwords = M.qtype_highlightwords || {};
+M.qtype_highlightwords.highlight = {
+  init: function(param) {
+  }
+};
+
+}, '@VERSION@');

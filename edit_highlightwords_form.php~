@@ -37,6 +37,18 @@ class qtype_highlightwords_edit_form extends question_edit_form {
     public $delimitchars;
 
     protected function definition_inner($mform) {
+        $mform->addElement('hidden', 'reload', 1);
+        $mform->setType('reload', PARAM_RAW);
+        $mform->removeelement('generalfeedback');
+
+        // Default mark will be set to 1 * number of fields.
+        $mform->removeelement('defaultmark');
+
+        $mform->addElement('editor', 'generalfeedback', get_string('generalfeedback', 'question')
+                , array('rows' => 10), $this->editoroptions);
+
+        $mform->setType('generalfeedback', PARAM_RAW);
+        $mform->addHelpButton('generalfeedback', 'generalfeedback', 'question');
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_highlightwords'));
 
         // The delimiting characters around fields.

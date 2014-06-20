@@ -35,3 +35,4 @@ $string['pluginnameadding'] = 'Adding a Highlight words question.';
 $string['pluginnameediting'] = 'Editing Highlight words question.';
 $string['pluginnamesummary'] = 'Summary';
 $string['questionsmissing'] = 'You have not included any fields in your question text';
+$string['yougotnrightcount'] = 'Your number of correctly filled in gaps is {$a->num}.';
