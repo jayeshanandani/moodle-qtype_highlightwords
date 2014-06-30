@@ -22,7 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once($CFG->dirroot . '/question/type/edit_question_form.php');
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -34,15 +33,12 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_highlightwords_edit_form extends question_edit_form {
 
     public $answer;
-    public $delimitchars;
 
     protected function definition_inner($mform) {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_highlightwords'));
-
-        // The delimiting characters around fields.
-        $delimitchars = array("[]" => "[ ]", "{}" => "{ }", "##" => "##", "@@" => "@ @");
-        $mform->addElement('select', 'delimitchars', get_string('delimitchars', 'qtype_highlightwords'), $delimitchars);
-        $mform->addHelpButton('delimitchars', 'delimitchars', 'qtype_highlightwords');
+        $data = array();
+        $mform->addElement('hidden', 'answers', $data);
+        $mform->setType('answers', PARAM_ACTION);
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);
@@ -62,10 +58,7 @@ class qtype_highlightwords_edit_form extends question_edit_form {
 
     public function validation($fromform, $data) {
         $errors = array();
-        $left = substr($fromform['delimitchars'], 0, 1);
-        $right = substr($fromform['delimitchars'], 1, 1);
-
-        $fieldregex = '/\\' . $left . '(.*?)\\' . $right . '/';
+        $fieldregex = '/(\*\w+)/';
         preg_match_all($fieldregex, $fromform['questiontext']['text'], $matches);
         if (count($matches[0]) == 0) {
             $errors['questiontext'] = get_string('questionsmissing', 'qtype_highlightwords_options');

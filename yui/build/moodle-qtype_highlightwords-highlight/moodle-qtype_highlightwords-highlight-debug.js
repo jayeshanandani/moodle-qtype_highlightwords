@@ -1,3 +1,5 @@
+YUI.add('moodle-qtype_highlightwords-highlight', function (Y, NAME) {
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -56,3 +58,5 @@ M.qtype_highlightwords.highlight = {
         	console.log(temp);
     }
 };
+
+}, '@VERSION@', {"requires": ["base", "node", "text-wordbreak"]});

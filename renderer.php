@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/question/type/highlightwords/classes/parser.php');
 
 
 class qtype_highlightwords_renderer extends qtype_with_combined_feedback_renderer {
@@ -30,19 +31,38 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
         global $PAGE;
         
         $question = $qa->get_question();
-        $left = substr($question->delimitchars, 0, 1);
-        $right = substr($question->delimitchars, 1, 1);
-        $data = str_replace(array($left,$right),"",$qa->get_question()->format_questiontext($qa));
+        $text = qtype_highlightwords_parser::parse($question->questiontext);
+        $data = $this->add_span_tag($text);
         $output = $data;
 
         $params = array(
-        	'data' => $data
+           'content' => $data
         );
+
 
         $PAGE->requires->yui_module('moodle-qtype_highlightwords-highlight',
                 'M.qtype_highlightwords.highlight.init', array($params));
 
+        
+
         return $output;
+    }
+
+    public function add_span_tag($text) {
+    	$data = array();
+    	$counter = 0;
+        foreach ($text as $key => $value) {
+                if($value['type'] === 'word') {
+                	$tag = html_writer::tag('span', $value['text'], array('class'=>'node', 'id' => $counter));
+                    $data[$counter] = $tag;
+                    $counter = $counter + 1;
+                } else {
+                	$data[$counter] = $value['text'];
+                	$counter = $counter + 1;
+                }   
+        }
+        $content = implode("", $data);
+        return $content;
     }
 
     public function specific_feedback(question_attempt $qa) {

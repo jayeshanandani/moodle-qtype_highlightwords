@@ -41,14 +41,10 @@ class qtype_highlightwords extends question_type {
 
     public function save_question_options($question) {
 
-        /* answerwords are the text within delimeters */
-        $answerwords = $this->get_highlightwords($question, $question->delimitchars, $question->questiontext);
-        $answerfields = $this->get_answer_fields($answerwords, $question);
+        $answerwords = $this->get_highlightwords($question, $question->questiontext);
         global $DB;
 
         $context = $question->context;
-        // Fetch old answer ids so that we can reuse them.
-        $this->update_question_answers($question, $answerfields);
 
         $options = $DB->get_record('qtype_highlightwords_options', array('questionid' => $question->id));
         $this->update_qtype_highlightwords_options($question, $options, $context);
@@ -66,80 +62,18 @@ class qtype_highlightwords extends question_type {
             $options->correctfeedback = '';
             $options->partiallycorrectfeedback = '';
             $options->incorrectfeedback = '';
-            $options->delimitchars = '';
             $options->id = $DB->insert_record('qtype_highlightwords_options', $options);
         }
-
-        $options->delimitchars = $question->delimitchars;
 
         $options = $this->save_combined_feedback_helper($options, $question, $context, true);
         $DB->update_record('qtype_highlightwords_options', $options);
     }
 
-    public function update_question_answers($question, array $answerfields) {
-        global $DB;
-        $oldanswers = $DB->get_records('question_answers', array('question' => $question->id), 'id ASC');
-
-        foreach ($answerfields as $field) {
-            if ($answer = array_shift($oldanswers)) {
-                $answer->question = $question->id;
-                $answer->answer = $field['value'];
-                $answer->feedback = '';
-                $answer->fraction = $field['fraction'];
-                $DB->update_record('question_answers', $answer);
-            } else {
-                $answer = new stdClass();
-                $answer->question = $question->id;
-                $answer->answer = $field['value'];
-                $answer->feedback = '';
-                $answer->correctfeedback = '';
-                $answer->partiallycorrectfeedback = '';
-                $answer->incorrectfeedback = '';
-                $answer->fraction = $field['fraction'];
-                $answer->id = $DB->insert_record('question_answers', $answer);
-            }
-        }
-
-        foreach ($oldanswers as $oa) {
-            $DB->delete_records('question_answers', array('id' => $oa->id));
-        }
-    }
-
-    public function get_highlightwords($question, $delimitchars, $questiontext) {
-        $left = substr($delimitchars, 0, 1);
-        $right = substr($delimitchars, 1, 1);
-        $fieldregex = '/.*?\\' . $left . '(.*?)\\' . $right . '/';
+    public function get_highlightwords($question, $questiontext) {
+        $fieldregex = '/(\*\w+)/';
         $matches = array();
         preg_match_all($fieldregex, $questiontext, $matches);
         return $matches[1];
-    }
-
-    /**
-     * Set up all the answer fields with respective fraction (mark values)
-     * This is used to update the question_answers table. Answerwords has
-     * been pulled from within the delimitchars e.g. the cat within [cat]
-     * 
-     * @param array $answerwords
-     * @param type $question
-     * @return type array
-     */
-    public function get_answer_fields(array $answerwords, $question) {
-        $answerfields = array();
-
-        if (!property_exists($question, 'answer')) {
-        	$length = count($answerwords);
-            foreach ($answerwords as $key => $value) {
-                $answerfields[$key]['value'] = $value;
-                $answerfields[$key]['fraction'] = 1 / $length;
-            }
-        }
-        return $answerfields;
-    }
-
-    /* data used by export_to_xml */
-
-    public function extra_question_fields() {
-        return array('qtype_highlightwords_options', 'delimitchars');
     }
 
     /* populates fields such as combined feedback in the editing form */
@@ -189,8 +123,6 @@ class qtype_highlightwords extends question_type {
 
     public function export_to_xml($question, qformat_xml $format, $extra = null) {
         $output = parent::export_to_xml($question, $format);
-        $output .= '    <delimitchars>' . $question->options->delimitchars .
-                "</delimitchars>\n";
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);
         return $output;
     }
