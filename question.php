@@ -41,7 +41,7 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
     /* the characters indicating a field to fill i.e. [cat] creates
      * a field where the correct answer is cat
      */
-    public $delimitchars = "[]";
+    public $delimitchars = "*";
 
     /**
      * @var array place number => group number of the places in the question
@@ -59,46 +59,10 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
     public $rightchoices;
     public $allanswers = array();
 
-    public function start_attempt(question_attempt_step $step, $variant) {
-        $done = false;
-        $temp = array();
-        $this->allanswers = array_unique($this->allanswers);
-        foreach ($this->allanswers as $value) {
-            if (strpos($value, '|')) {
-                $temp = array_merge($temp, explode("|", $value));
-            } else {
-
-                array_push($temp, $value);
-            }
-        }
-        $this->allanswers = $temp;
-
-        shuffle($this->allanswers);
-        $step->set_qt_var('_allanswers', serialize($this->allanswers));
-    }
-
-    /**
-     * @param int $key stem number
-     * @return string the question-type variable name.
-     */
-    public function field($place) {
-        return 'p' . $place;
-    }
-
     public function get_expected_data() {
-        $data = array();
-        foreach ($this->places as $key => $value) {
-            $data['p' . $key] = PARAM_RAW_TRIMMED;
-        }
-        return $data;
+        return array('answers' => PARAM_SEQUENCE);
     }
 
-    /**
-     * @param array $response  as might be passed to {@link grade_response()}
-     * @return string 
-     * Value returned will be written to responsesummary field of 
-     * the question_attempts table
-     */
     public function summarise_response(array $response) {
         $summary = "";
         foreach ($response as $key => $value) {
@@ -112,7 +76,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         foreach ($this->answers as $key => $value) {
             $ans = array_shift($response);
             if ($ans == "") {
-
                 return false;
             }
         }
@@ -125,9 +88,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         }
     }
 
-    /**
-     * What is the correct value for the field 
-     */
     public function get_right_choice_for($place) {
         return $this->places[$place];
     }
@@ -140,11 +100,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         }
     }
 
-    /**
-     * @return question_answer an answer that 
-     * contains the a response that would get full marks.
-     * used in preview mode
-     */
     public function get_correct_response() {
         $response = array();
         foreach ($this->places as $place => $answer) {
@@ -156,10 +111,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
     /* called from within renderer in interactive mode */
 
     public function is_correct_response($answergiven, $rightanswer) {
-        if (!$this->casesensitive == 1) {
-            $answergiven = strtolower($answergiven);
-            $rightanswer = strtolower($rightanswer);
-        }
         if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
             return true;
         } else {

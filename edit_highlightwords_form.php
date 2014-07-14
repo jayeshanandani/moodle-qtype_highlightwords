@@ -37,8 +37,6 @@ class qtype_highlightwords_edit_form extends question_edit_form {
     protected function definition_inner($mform) {
         $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_highlightwords'));
         $data = array();
-        $mform->addElement('hidden', 'answers', $data);
-        $mform->setType('answers', PARAM_ACTION);
 
         // To add combined feedback (correct, partial and incorrect).
         $this->add_combined_feedback_fields(true);

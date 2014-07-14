@@ -40,22 +40,25 @@ M.qtype_highlightwords.highlight = {
         VALUE_CHANGE_ELEMENTS: 'span'
     },
 
-    init: function(param) {
-        this.click_word(param);
+    init: function() {
+        this.rootDiv = Y.one('.formulation');
+        this.click_word();
     },
     
     click_word:function(){
-		this.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS);
+		this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS);
 	},
 
 	value_change:function() {
-        Y.one(this).toggleClass(this.CSS.RED_BG);
-         	if (Y.one(this).hasClass(this.CSS.RED_BG)) {
-            	temp[this.getAttribute('id')] = this.getHTML();
-        	} else {
-            	delete temp[this.getAttribute('id')];
-        	}
-        	console.log(temp);
+  
+        Y.one(this).toggleClass('red-bg');
+           if (Y.one(this).hasClass('red-bg')) {
+                temp[this.getAttribute('id')] = this.getHTML();
+            } else {
+                delete temp[this.getAttribute('id')];
+            }
+        Y.one('#answers').set('value',temp);
+        console.log(temp);
     }
 };
 

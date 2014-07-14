@@ -39,9 +39,10 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
            'content' => $data
         );
 
+        $output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'answers', 'id'=>'answers');
 
         $PAGE->requires->yui_module('moodle-qtype_highlightwords-highlight',
-                'M.qtype_highlightwords.highlight.init', array($params));
+                'M.qtype_highlightwords.highlight.init', array());
 
         
 
