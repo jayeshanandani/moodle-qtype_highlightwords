@@ -55,7 +55,7 @@ M.qtype_highlightwords.highlight = {
             } else {
                 delete temp[this.getAttribute('id')];
             }
-        Y.one('#answers').set('value',temp);
+        Y.one('#words').set('value',temp);
         console.log(temp);
     }
 };

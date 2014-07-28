@@ -159,6 +159,7 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
             $answergiven = $response[$this->field($place)];
             $rightanswer = $this->get_right_choice_for($place);
             if (!$this->casesensitive == 1) {
+                
                 $answergiven = strtolower($answergiven);
                 $rightanswer = strtolower($rightanswer);
             }
