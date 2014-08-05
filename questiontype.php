@@ -107,7 +107,7 @@ class qtype_highlightwords extends question_type {
         parent::delete_question($questionid, $contextid);
     }
 
-     public function questionid_column_name() {
+    public function questionid_column_name() {
         return 'questionid';
     }
 

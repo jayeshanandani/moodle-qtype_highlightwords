@@ -15,13 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    qtype_highlightwords
+ * @package    moodlecore
  * @subpackage backup-moodle2
- * @copyright  2014 Jayesh Anandani
+ * @copyright  2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 class backup_qtype_highlightwords_plugin extends backup_qtype_plugin {

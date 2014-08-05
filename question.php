@@ -234,11 +234,7 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         }
         $pattern = str_replace('/', '\/', $answer);
         $regexp = '/^' . $pattern . '$/u';
-
-        // Make the match insensitive if requested to, not sure this is necessary.
-        if (!$casesensitive) {
-            $regexp .= 'i';
-        }
+        
         /* the @ is to suppress warnings, e.g. someone forgot to turn off regex matching */
         if (@preg_match($regexp, trim($answergiven))) {
             return true;
