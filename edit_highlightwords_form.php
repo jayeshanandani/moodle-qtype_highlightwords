@@ -35,7 +35,6 @@ class qtype_highlightwords_edit_form extends question_edit_form {
     public $answer;
 
     protected function definition_inner($mform) {
-        $mform->addElement('header', 'feedbackheader', get_string('moreoptions', 'qtype_highlightwords'));
         $data = array();
 
         // To add combined feedback (correct, partial and incorrect).
@@ -59,7 +58,7 @@ class qtype_highlightwords_edit_form extends question_edit_form {
         $fieldregex = '/(\*\w+)/';
         preg_match_all($fieldregex, $fromform['questiontext']['text'], $matches);
         if (count($matches[0]) == 0) {
-            $errors['questiontext'] = get_string('questionsmissing', 'qtype_highlightwords_options');
+            $errors['questiontext'] = get_string('questionsmissing', 'qtype_highlightwords');
         }
 
         if ($errors) {
