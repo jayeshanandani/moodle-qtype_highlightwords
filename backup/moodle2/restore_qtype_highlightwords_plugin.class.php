@@ -65,7 +65,7 @@ class restore_qtype_highlightwords_plugin extends restore_qtype_plugin {
         // If the question has been created by restore, we need to create its qtype_highlightwords_options too.
         if ($questioncreated) {
             // Adjust value to link back to the questions table.
-            $data->question = $newquestionid;
+            $data->questionid = $newquestionid;
             // Insert record.
             $newitemid = $DB->insert_record('qtype_highlightwords_options', $data);
             // Create mapping (needed for decoding links).

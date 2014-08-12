@@ -25,7 +25,7 @@ M.qtype_highlightwords = M.qtype_highlightwords || {};
 M.qtype_highlightwords.highlight = {
 
 	CSS: {
-		RED_BG : 'red-bg'
+		SELECTED_WORD : 'selectedword'
 	},
 	
 	/**
@@ -51,13 +51,13 @@ M.qtype_highlightwords.highlight = {
 
 	value_change:function() {
   
-        Y.one(this).toggleClass('red-bg');
-           if (Y.one(this).hasClass('red-bg')) {
+        Y.one(this).toggleClass('selectedword');
+           if (Y.one(this).hasClass('selectedword')) {
                 temp[this.getAttribute('id')] = this.getHTML();
             } else {
                 delete temp[this.getAttribute('id')];
             }
-        Y.one('#answers').set('value',temp);
+        Y.one('#words').set('value',temp);
         console.log(temp);
     }
 };
