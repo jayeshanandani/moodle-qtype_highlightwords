@@ -40,22 +40,23 @@ M.qtype_highlightwords.highlight = {
 
     init: function() {
         this.rootDiv = Y.one('.formulation');
-        this.click_word();
+        var temp;
+        this.click_word(temp);
     },
     
-    click_word:function(){
+    click_word:function(temp){
 		this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS);
 	},
 
 	value_change:function() {
   
-        Y.one(this).toggleClass('selectedword');
-           if (Y.one(this).hasClass('selectedword')) {
+        Y.one(this).toggleClass(this.CSS.SELECTED_WORD);
+           if (Y.one(this).hasClass(this.CSS.SELECTED_WORD)) {
                 temp[this.getAttribute('id')] = this.getHTML();
             } else {
                 delete temp[this.getAttribute('id')];
             }
-        Y.one('#words').set('value',temp);
+        //Y.one('#words').set('value',temp);
         console.log(temp);
     }
 };

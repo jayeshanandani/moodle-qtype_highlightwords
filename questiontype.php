@@ -54,8 +54,7 @@ class qtype_highlightwords extends question_type {
 
     public function update_qtype_highlightwords_options($question, $options, $context) {
         global $DB;
-
-        $options = $DB->get_record('qtype_highlightwords_options', array('questionid' => $question->id));
+        
         if (!$options) {
             $options = new stdClass();
             $options->questionid = $question->id;

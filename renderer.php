@@ -32,14 +32,15 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
         
         $question = $qa->get_question();
         $text = qtype_highlightwords_parser::parse($question->questiontext);
-        $data = $this->add_span_tag($text);
+        $inputname = $qa->get_qt_field_name('answer');
+        $data = $this->add_span_tag($inputname,$text);
         $output = $data;
 
         $params = array(
            'content' => $data
         );
 
-        $output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'words[]', 'id'=>'words'));
+        //$output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'words[]', 'id'=>'words'));
 
         $PAGE->requires->yui_module('moodle-qtype_highlightwords-highlight',
                 'M.qtype_highlightwords.highlight.init', array());
@@ -49,12 +50,12 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
         return $output;
     }
 
-    public function add_span_tag($text) {
+    public function add_span_tag($inputname,$text) {
     	$data = array();
     	$counter = 0;
         foreach ($text as $key => $value) {
                 if($value['type'] === 'word') {
-                	$tag = html_writer::tag('span', $value['text'], array('class'=>'node', 'id' => $counter));
+                	$tag = html_writer::tag('span', $value['text'], array('class'=>'node', 'id' => $inputname.'_'.$counter));
                     $data[$counter] = $tag;
                     $counter = $counter + 1;
                 } else {
