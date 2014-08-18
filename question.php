@@ -61,28 +61,13 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         return array('answers' => PARAM_SEQUENCE);
     }
 
-    public function summarise_response(array $response) {
-        $summary = "";
-        foreach ($response as $key => $value) {
-            $summary.=" " . $value . " ";
-        }
-        return $summary;
-    }
-
     public function is_complete_response(array $response) {
-        /* checks that none of of the gaps is blanks */
-        foreach ($this->answers as $key => $value) {
-            $ans = array_shift($response);
-            if ($ans == "") {
-                return false;
-            }
-        }
         return true;
     }
 
     public function get_validation_error(array $response) {
         if (!$this->is_gradable_response($response)) {
-            return get_string('pleaseenterananswer', 'qtype_highlightwords');
+            return '';
         }
     }
 
@@ -106,8 +91,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         return $response;
     }
 
-    /* called from within renderer in interactive mode */
-
     public function is_correct_response($answergiven, $rightanswer) {
         if ($this->compare_response_with_answer($answergiven, $rightanswer, $this->casesensitive, $this->disableregex)) {
             return true;
@@ -116,14 +99,18 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         }
     }
 
-    /**
-     *
-     * @param array $response Passed in from the submitted form
-     * @return array 
-     *
-     * Find count of correct answers, used for displaying marks
-     * for question. Compares answergiven with right/correct answer
-     */
+    public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
+        if ($component == 'question' && in_array($filearea, array('correctfeedback',
+                    'partiallycorrectfeedback', 'incorrectfeedback'))) {
+            return $this->check_combined_feedback_file_access($qa, $options, $filearea);
+        } else if ($component == 'question' && $filearea == 'hint') {
+            return $this->check_hint_file_access($qa, $options, $args);
+        } else {
+            return parent::check_file_access($qa, $options, $component, $filearea, $args, $forcedownload);
+        }
+    }
+
+
     public function get_num_parts_right(array $response) {
         $numright = 0;
         foreach ($this->places as $place => $notused) {
@@ -143,12 +130,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         return array($numright, count($this->places));
     }
 
-    /**
-     * Given a response, rest the parts that are wrong. Relevent in 
-     * interactive with multiple tries
-     * @param array $response a response
-     * @return array a cleaned up response with the wrong bits reset.
-     */
     public function clear_wrong_from_response(array $response) {
         foreach ($this->places as $place => $notused) {
             if (!array_key_exists($this->field($place), $response)) {
@@ -168,7 +149,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         return $response;
     }
 
-
     public function grade_response(array $response) {
         $response = $this->discard_duplicates($response);
         list($right, $total) = $this->get_num_parts_right($response);
@@ -177,7 +157,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         return $grade;
     }
 
-    // Required by the interface question_automatically_gradable_with_countback.
     public function compute_final_grade($responses, $totaltries) {
         // Only applies in interactive mode.
         $responses[0] = $this->discard_duplicates($responses[0]);
@@ -205,17 +184,6 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
             }
         }
         return $totalscore / count($this->places);
-    }
-
-    public function check_file_access($qa, $options, $component, $filearea, $args, $forcedownload) {
-        if ($component == 'question' && in_array($filearea, array('correctfeedback',
-                    'partiallycorrectfeedback', 'incorrectfeedback'))) {
-            return $this->check_combined_feedback_file_access($qa, $options, $filearea);
-        } else if ($component == 'question' && $filearea == 'hint') {
-            return $this->check_hint_file_access($qa, $options, $args);
-        } else {
-            return parent::check_file_access($qa, $options, $component, $filearea, $args, $forcedownload);
-        }
     }
 
     public function compare_response_with_answer($answergiven, $answer, $casesensitive, $disableregex = false) {
