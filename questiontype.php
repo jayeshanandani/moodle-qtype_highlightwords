@@ -35,6 +35,7 @@ class qtype_highlightwords extends question_type {
 
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
+        $question->textfragments = qtype_highlightwords_parser::parse($question->questiontext);
         $this->initialise_question_answers($question, $questiondata);
         $this->initialise_combined_feedback($question, $questiondata);
     }

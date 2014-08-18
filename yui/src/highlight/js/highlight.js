@@ -41,17 +41,17 @@ M.qtype_highlightwords.highlight = {
     init: function() {
         this.rootDiv = Y.one('.formulation');
         var temp;
-        this.click_word(temp);
+        this.click_word();
     },
     
-    click_word:function(temp){
-		this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS);
+    click_word:function(){
+		this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS,this);
 	},
 
 	value_change:function() {
   
-        Y.one(this).toggleClass(this.CSS.SELECTED_WORD);
-           if (Y.one(this).hasClass(this.CSS.SELECTED_WORD)) {
+        Y.one(this).toggleClass('selectedword');
+           if (Y.one(this).hasClass('selectedword')) {
                 temp[this.getAttribute('id')] = this.getHTML();
             } else {
                 delete temp[this.getAttribute('id')];

@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 class qtype_highlightwords_question extends question_graded_automatically_with_countback {
 
     public $answer;
-    public $shuffledanswers;
     public $correctfeedback;
     public $partiallycorrectfeedback = '';
     public $incorrectfeedback = '';
@@ -38,8 +37,7 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
     /** @var array of question_answer. */
     public $answers = array();
 
-    /* the characters indicating a field to fill i.e. [cat] creates
-     * a field where the correct answer is cat
+    /* the characters indicating word to be marked i.e. *cat
      */
     public $delimitchars = "*";
 
