@@ -39,12 +39,16 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
            'content' => $data
         );
 
-        //$output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'words[]', 'id'=>'words'));
+        $output .= html_writer::empty_tag('input', array('type' => 'hidden', 'name' => $inputname, 'id' => $inputname));
+
+        $params = array(
+            'inputname' => $inputname,
+            'topnode'   => 'div.que.highlightwords#q' . $qa->get_slot(),
+            'readonly'  => $options->readonly
+        );
 
         $PAGE->requires->yui_module('moodle-qtype_highlightwords-highlight',
-                'M.qtype_highlightwords.highlight.init', array());
-
-        
+                'M.qtype_highlightwords.highlight.init', $params);
 
         return $output;
     }
