@@ -22,11 +22,11 @@
 M.qtype_highlightwords = M.qtype_highlightwords || {};
 M.qtype_highlightwords.highlight = {
 
-	CSS: {
-		SELECTED_WORD : 'selectedword'
-	},
-	
-	/**
+    CSS: {
+        SELECTED_WORD : 'selectedword'
+    },
+
+    /**
      * The selectors used throughout this class.
      *
      * @property SELECTORS
@@ -38,25 +38,25 @@ M.qtype_highlightwords.highlight = {
         VALUE_CHANGE_ELEMENTS: 'span'
     },
 
-    init: function() {
-        this.rootDiv = Y.one('.formulation');
-        var temp;
-        this.click_word();
-    },
-    
-    click_word:function(){
-		this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS,this);
-	},
+    rootDiv: null,
+    temp: null,
+    inputname: null,
 
-	value_change:function() {
-  
-        Y.one(this).toggleClass('selectedword');
-           if (Y.one(this).hasClass('selectedword')) {
-                temp[this.getAttribute('id')] = this.getHTML();
+    init: function(inputname, topnode, readonly) {
+        this.rootDiv = Y.one(topnode);
+        if (!readonly) {
+            this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS,this);
+        }
+    },
+
+    value_change: function(e) {
+        e.currentTarget.toggleClass('selectedword');
+           if (e.currentTarget.hasClass('selectedword')) {
+                this.temp[e.currentTarget.getAttribute('id')] = this.getHTML();
             } else {
-                delete temp[this.getAttribute('id')];
+                delete this.temp[e.currentTarget.getAttribute('id')];
             }
-        //Y.one('#words').set('value',temp);
+        Y.one(document.getElementById(this.inputname)).set('value', temp);
         console.log(temp);
     }
 };
