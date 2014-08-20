@@ -71,6 +71,14 @@ class qtype_highlightwords_question extends question_graded_automatically_with_c
         }
     }
 
+    public function summarise_response(array $response) {
+        $summary = "";
+        foreach ($response as $key => $value) {
+             $summary.=" " . $value . " ";
+        }
+         return $summary;
+    }
+
     public function get_right_choice_for($place) {
         return $this->places[$place];
     }

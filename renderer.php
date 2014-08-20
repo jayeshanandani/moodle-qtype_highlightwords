@@ -31,8 +31,6 @@ class qtype_highlightwords_renderer extends qtype_with_combined_feedback_rendere
         global $PAGE;
         
         $question = $qa->get_question();
-        print_object($qa);
-        print_object($options);
         $inputname = $qa->get_qt_field_name('answer');
         $data = $this->add_span_tag($inputname,$question->textfragments);
         $output = $data;
