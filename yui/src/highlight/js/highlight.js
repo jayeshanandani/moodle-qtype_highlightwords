@@ -39,11 +39,11 @@ M.qtype_highlightwords.highlight = {
     },
 
     rootDiv: null,
-    temp: null,
-    inputname: null,
+    inputName: null,
 
     init: function(inputname, topnode, readonly) {
         this.rootDiv = Y.one(topnode);
+        this.inputName = inputname;
         if (!readonly) {
             this.rootDiv.delegate('click', this.value_change, this.SELECTORS.VALUE_CHANGE_ELEMENTS,this);
         }
@@ -51,12 +51,16 @@ M.qtype_highlightwords.highlight = {
 
     value_change: function(e) {
         e.currentTarget.toggleClass('selectedword');
-           if (e.currentTarget.hasClass('selectedword')) {
-                this.temp[e.currentTarget.getAttribute('id')] = this.getHTML();
-            } else {
-                delete this.temp[e.currentTarget.getAttribute('id')];
+
+        var value = '';
+        this.rootDiv.all(this.SELECTORS.VALUE_CHANGE_ELEMENTS).each(function(word) {
+            if (word.hasClass('selectedword')) {
+                if (value !== '') {
+                    value += ',';
+                }
+                value += word.get('id');
             }
-        Y.one(document.getElementById(this.inputname)).set('value', temp);
-        console.log(temp);
+        });
+        Y.one(document.getElementById(this.inputName)).set('value', value);
     }
 };
